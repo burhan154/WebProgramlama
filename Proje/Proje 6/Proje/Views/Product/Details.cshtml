@@ -1,0 +1,132 @@
+﻿@model ProductDetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-5 col-md-push-2">
+
+                <div id="product-main-img">
+                    @foreach (var img in Model.ProductImages)
+                    {
+                        <div class="product-preview">
+                            <img alt="" src="/images/products/@img.ImageName" />
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /Product main img -->
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    @foreach (var img in Model.ProductImages)
+                    {
+                        <div class="product-preview">
+                            <img alt="" src="/images/products/@img.ImageName" />
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">@Model.Product.ProductName</h2>
+                    <div>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="product-price">$@Model.Product.Price</h3>
+                        <span class="product-available">In Stock</span>
+                    </div>
+                    <p>@Model.Product.Description</p>
+
+
+                    <form asp-action="AddToCart" asp-controller="Cart" method="post" class="form-inline">
+
+                        <div class="add-to-cart">
+                            <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+                            <div class="form-group qty">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Qty</span>
+                                    <input type="number" size="4" name="quantity" class="form-control" value="1" min="1" step="1">
+                                </div>
+                            </div>
+                            <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                        </div>
+                    </form>
+
+                    <ul class="product-btns">
+                        <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+
+                    </ul>
+
+                    <ul class="product-links">
+
+                        <li>Category:</li>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <li>
+                                <a href="#">@item.CategoryName</a>
+                            </li>
+                        }
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12 padding25" style="margin-top:60px">
+
+
+            <ul class="nav nav-tabs">
+                <li class=""><a data-toggle="tab" href="#description" aria-expanded="false">Description</a></li>
+                <li class="active"><a data-toggle="tab" href="#spec" aria-expanded="true">Specifications</a></li>
+            </ul>
+
+
+            <div class="tab-content">
+
+                <!-- description tab start -->
+                <div id="description" class="tab-pane fade">
+                    @Html.Raw(Model.Product.HtmlContent)
+                </div>
+                <!-- description tab end -->
+                <!-- Specifications tab start -->
+                <div id="spec" class="tab-pane fade active in">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <tbody>
+                                @foreach (var item in Model.ProductAttributes)
+                                {
+                                    <tr>
+                                        <td><b>@item.Attribute</b></td>
+                                        <td>@item.Value</td>
+                                    </tr>
+                                }
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>
