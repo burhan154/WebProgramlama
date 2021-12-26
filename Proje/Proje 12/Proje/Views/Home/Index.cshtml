@@ -1,0 +1,131 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div id="hot-deal" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hot-deal">
+                    <ul class="hot-deal-countdown">
+                        <li>
+                            <div style="font-size:17px; color:white;">
+                                <h3 id="day"><bold>00</bold></h3>
+                                <h4 style="color:white;">@localizer["Day"]</h4>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div style="font-size: 17px; color: white; ">
+                                <h3 id="hour"><bold>00</bold></h3>
+                                <h4 style="color:white;">@localizer["Hour"]</h4>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div style="font-size: 17px; color: white; ">
+                                <h3 id="minute"><bold>00</bold></h3>
+                                <h4 style="color:white;">@localizer["Mins"]</h4>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div style="font-size: 17px; color: white; ">
+                                <h3 id="second"><bold>00</bold></h3>
+                                <h4 style="color:white;">@localizer["Secs"]</h4>
+                            </div>
+
+                        </li>
+                    </ul>
+                    <h2 class="text-uppercase">@localizer["Hot deal this week"]</h2>
+                    <p>@localizer["New Collection Up to 50% OFF"]</p>
+                    <a class="primary-btn cta-btn" asp-controller="Products" asp-action="Index">@localizer["Shop now"]</a>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<script>
+    const countDate = new Date('Jan 1, 2022 00:00:00').getTime();
+
+    function newYear() {
+        const now = new Date().getTime();
+        let gap = countDate - now;
+
+        let second = 1000;
+        let minute = second * 60;
+        let hour = minute * 60;
+        let day = hour * 24;
+
+        let d = Math.floor(gap / (day));
+        let h = Math.floor((gap % (day)) / (hour));
+        let m = Math.floor((gap % (hour)) / (minute));
+        let s = Math.floor((gap % (minute)) / (second));
+
+        document.getElementById('day').innerText = d ;
+        document.getElementById('hour').innerText = h;
+        document.getElementById('minute').innerText = m;
+        document.getElementById('second').innerText = s ;
+    }
+
+    setInterval(function () {
+        newYear()
+    },1000);
+</script>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- shop -->
+            <div class="col-md-4 col-xs-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="./img/shop01.png" alt="">
+                    </div>
+                    <div class="shop-body">
+                        <h3>@localizer["Laptop"]<br>@localizer["Collection"]</h3>
+                        <a href="#" class="cta-btn">@localizer["Shop now"] <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /shop -->
+            <!-- shop -->
+            <div class="col-md-4 col-xs-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="./img/shop03.png" alt="">
+                    </div>
+                    <div class="shop-body">
+                        <h3>@localizer["Accessories"]<br>@localizer["Collection"]</h3>
+                        <a href="#" class="cta-btn">@localizer["Shop now"] <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /shop -->
+            <!-- shop -->
+            <div class="col-md-4 col-xs-6">
+                <div class="shop">
+                    <div class="shop-img">
+                        <img src="./img/shop02.png" alt="">
+                    </div>
+                    <div class="shop-body">
+                        <h3>@localizer["Cameras"]<br>@localizer["Collection"]</h3>
+                        <a href="#" class="cta-btn">@localizer["Shop now"] <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /shop -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>

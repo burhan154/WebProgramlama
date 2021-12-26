@@ -1,0 +1,27 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<CategoryModel>
+
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">@localizer["Home"]</a></li>
+                <li><a asp-area="" asp-controller="Products" asp-action="">@localizer["All Products"]</a></li>
+                @foreach (var category in Model)
+                {
+                    <li>
+                        <a asp-controller="Product" asp-action="List" asp-route-category="@category.CategoryName">
+                            @localizer[@category.CategoryName] <span class="pull-right">(@category.Count)</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+</nav>

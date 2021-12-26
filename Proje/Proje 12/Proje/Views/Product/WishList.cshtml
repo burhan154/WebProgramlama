@@ -1,0 +1,83 @@
+﻿@model WishProductModel
+<section id="content">
+
+    <section id="shop" class="container">
+
+        <div class="row">
+
+            <!-- sidebar start -->
+            <div id="sidebar" class="col-md-3">
+
+
+
+
+                @await Component.InvokeAsync("Categories")
+                @await Component.InvokeAsync("FeaturedProducts")
+
+
+            </div>
+            <!-- sidebar end -->
+            <!-- right column start -->
+            <div class="col-md-9">
+
+                <div class="row">
+
+                    <div class="col-md-12 wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+                        <div class="row product-results">
+                            <div class="product-results">
+                                <div class="col-xs-8">
+                                    <p class="woocommerce-result-count">
+
+                                    </p>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-md-4 col-xs-6">
+                            <div class="product">
+                                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Product.ProductId">
+                                 <div class="product-img">
+                                 <img src="/images/products/tn/@product.Product.Image" height="200" alt="">
+                            </div>
+                                 <div class="product-body">
+                                     <h3 class="product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@product.Product.ProductId">@product.Product.ProductName</a></h3>
+                                     <h4 class="product-price">$@product.Product.Price</h4>
+                                     <div class="product-rating"></div>
+
+                                     <form asp-action="AddToCart" asp-controller="Cart" method="post" class="form-inline">
+                                         <input type="hidden" name="ProductId" value="@product.Product.ProductId" />
+                                         <button type="submit" class="btn btn-danger btn-block"><i class="fa fa-shopping-cart"></i> Add To Cart</button>
+                                     </form>
+                                     <br />
+                                     <form asp-controller="Product" asp-action="RemoveFromWishList" method="post" class="form-inline">
+                                         <input type="hidden" name="ProductId" value="@product.Product.ProductId" />
+                                         <button type="submit" class="btn btn-danger btn-block"><i class="fa fa-trash-o"></i> Remove</button>
+                                     </form>
+                                 </div>
+                        </a>
+                    </div>
+                </div>
+                    }
+
+
+
+                </div>
+               
+
+
+            </div>
+            <!-- right column end -->
+
+        </div>
+
+
+
+    </section>
+
+
+
+</section>

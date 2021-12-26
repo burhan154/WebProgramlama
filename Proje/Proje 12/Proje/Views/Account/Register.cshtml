@@ -1,0 +1,85 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model RegisterModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <section class="row d-flex justify-content-center align-items-center mt-lg-5">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black ">
+                        <div class="row g-0 shadow-lg">
+
+                            <div class="col-lg-6 d-flex justify-content-center align-items-center register-color text-center">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4 justify-content-center">
+                                    <h4 class="mb-4">@localizer["Welcome to Register"]</h4>
+                                    <p class="mb-0 me-2">@localizer["Already have an account?"] </p>
+                                    <div class="text-center pt-1 mb-5 pb-1">
+                                        <a class="btn btn-primary btn-block fa-lg mb-3 mt-lg-5" asp-area="" asp-controller="User" asp-action="Login" role="button">@localizer["Sign In"]</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-1">
+                                    <div class="text-center">
+                                        <h4 class="mt-1 mb-5 pb-1">@localizer["Create an Account!"]</h4>
+                                    </div>
+
+                                    <div class="text-danger" asp-validation-summary="All"></div>
+
+                                    <form asp-action="Register" method="post">
+                                        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+
+
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+
+                                                <label asp-for="Name">@localizer["Name"]</label>
+                                                <input asp-for="Name" type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="@localizer["Enter First Name"]">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label asp-for="LastName">@localizer["Last Name"]</label>
+                                                <input asp-for="LastName" type="text" class="form-control form-control-user" id="exampleLastName" placeholder="@localizer["Enter Last Name"]">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Email">@localizer["Email address"]</label>
+                                            <input asp-for="Email" type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="@localizer["Enter Email Address"]">
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <label asp-for="Password">@localizer["Password"]</label>
+                                                <input asp-for="Password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="@localizer["Enter Password"]">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label asp-for="ConfirmPassword">@localizer["Repeat Password"]</label>
+                                                <input asp-for="ConfirmPassword" type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="@localizer["Enter Repeat Password"]">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center pt-1 mb-5 pb-1">
+                                            <button type="submit" class="btn btn-primary btn-block fa-lg register-color mb-3">@localizer["Sign Up"]</button>
+                                            <small id="emailHelp" class="form-text text-muted">@localizer["We'll never share your password with anyone else."]</small>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,224 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Cart
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section id="content">
+
+    <!-- shop section start -->
+    <section id="cart" class="container">
+
+        <!-- row start -->
+        <div class="row">
+
+            <!-- cart contents start -->
+            <div class="col-md-8">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@localizer["Product"]</th>
+                                <th>@localizer["Price"]</th>
+                                <th class="qtycolumn">@localizer["Quantity"]</th>
+                                <th>@localizer["Total"]</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.Products)
+                            {
+                                <tr>
+                                    <td><img alt="" class="img-responsive product-thumb" src="~/images/products/tn/@item.Product.Image" height="100px" width="100px"></td>
+                                    <td><a asp-controller="Product" asp-action="Details" asp-route-id="@item.Product.ProductId">@item.Product.ProductName</a></td>
+                                    <td>$@item.Product.Price.ToString()</td>
+                                    <td>
+
+
+                                        <div class="basket-item-actions">
+                                            <div class="counter-container">
+                                                <div class="counter-container-2">
+                                                    <div class="counter-button">
+                                                        <form asp-action="UpdateAzalt" asp-controller="Cart" method="post">
+                                                            <span class="input-group-btn">
+                                                                <input type="hidden" name="ProductId" value="@item.Product.ProductId" />
+                                                                <input type="hidden" name="quantity" value="@item.Quantity" />
+                                                                <button type="submit" class="btn btn-default value-control" data-action="minus" data-target="font-size">
+                                                                    <span class="glyphicon glyphicon-minus"></span>
+                                                                </button>
+                                                            </span>
+                                                        </form>
+                                                    </div>
+                                                    <input type="text" value="@item.Quantity" class="basket-counter-content" id="font-size">
+
+                                                    <div class="counter-button">
+                                                        <form asp-action="UpdateArtir" asp-controller="Cart" method="post">
+                                                            <input type="hidden" name="ProductId" value="@item.Product.ProductId" />
+                                                            <input type="hidden" name="quantity" value="@item.Quantity" />
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-default value-control" data-action="plus" data-target="font-size">
+                                                                    <span type="submit" class="glyphicon glyphicon-plus"></span>
+                                                                </button>
+                                                            </span>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </td>
+                                    <td>$@((item.Quantity*item.Product.Price).ToString())</td>
+                                    <td>
+                                        <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                                            <input type="hidden" name="ProductId" value="@item.Product.ProductId" />
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                @localizer["Remove"]
+                                                <i class="fa fa-times fa-fw"></i>
+                                            </button>
+                                        </form>
+
+
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+
+
+
+                </div>
+            </div>
+            <!-- cart contents end -->
+            <!-- cart total start -->
+            <div class="col-md-4">
+                <div class="text-left">
+                    <h4>@localizer["CART"] <b>@localizer["TOTALS"]</b></h4>
+                </div>
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>@localizer["Cart Subtotal"]</th>
+                            <td>$@Model.TotalPrice().ToString()</td>
+                        </tr>
+                        <tr>
+                            <th>@localizer["Shipping"]</th>
+                            <td>@localizer["Free"]</td>
+                        </tr>
+                        <tr>
+                            <th>@localizer["Order Total"]</th>
+                            <td class="ordertotal">$@Model.TotalPrice().ToString()</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg m-2"><i class="fa fa-arrow-circle-left fa-fw"></i>@localizer["Continue To Shopping"] </a>
+                    <a asp-controller="Cart" asp-action="Checkout" class="btn btn-primary btn-lg m-2">@localizer["Checkout"] <i class="fa fa-arrow-circle-right fa-fw"></i></a>
+
+                </div>
+
+            </div>
+            <!-- cart total end -->
+
+
+        </div>
+        <!-- row end -->
+
+    </section>
+    <!-- shop section end -->
+
+</section>
+
+<style>
+    .basket-item-actions {
+        font-size: 12px;
+        font-family: source_sans_proregular;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .counter-container {
+        font-size: 12px;
+        font-family: source_sans_proregular;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .counter-container-2 {
+        font-size: 12px;
+        font-family: source_sans_proregular;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        box-sizing: border-box;
+        width: 90px;
+    }
+
+
+
+    .counter-button {
+        font-size: 16px;
+        background: transparent;
+        border: 1px solid #e6e6e6;
+        background-color: #fafafa;
+        width: 24px;
+        height: 34px;
+        outline: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.3s;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .basket-counter-content {
+        margin: 0;
+        font-family: source_sans_proregular !important;
+        line-height: 30px;
+        padding: 0 10px;
+        width: 70px;
+        user-select: none;
+        height: 34px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: #4a4a4a;
+        box-sizing: border-box;
+        border: none;
+        border-top: solid 1px #e6e6e6;
+        border-bottom: solid 1px #e6e6e6;
+        background-color: #ffffff;
+        outline: none;
+        text-align: center;
+    }
+
+    .basket-item-actions-button {
+        font-size: 16px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        outline: none;
+    }
+</style>
+
+
+

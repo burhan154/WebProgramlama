@@ -1,0 +1,16 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@model IEnumerable<Category>
+
+
+<div class="footer">
+    <h3 class="footer-title">Categories</h3>
+    <ul class="footer-links">
+        <li><a asp-area="" asp-controller="Home" asp-action="Index">@localizer["Home"]</a></li>
+        <li><a asp-area="" asp-controller="Products" asp-action="">@localizer["All Products"]</a></li>
+        @foreach (var category in Model)
+        {
+            <li><a asp-controller="Product" asp-action="List" asp-route-category="@category.CategoryName"> @localizer[@category.CategoryName]</a></li>
+        }
+    </ul>
+</div>
